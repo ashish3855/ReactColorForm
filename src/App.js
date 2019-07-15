@@ -1,28 +1,58 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import AddColorForm from "./AddColorForm";
+import ListColorPalette from "./ListColorPalette";
+import "./css/App.css";
 
-class App extends Component {
+export default class App extends React.Component {
+  state = {
+    colors: [
+      {
+        id: "0175d1f0-a8c6-41bf-8d02-df5734d829a4",
+        title: "ocean at dusk",
+        color: "#00c4e2",
+        rating: 5
+      },
+      {
+        id: "83c7ba2f-7392-4d7d-9e23-35adbe186046",
+        title: "lawn",
+        color: "#26ac56",
+        rating: 3
+      },
+      {
+        id: "a11e3995-b0bd-4d58-8c48-5e49ae7f7f23",
+        title: "bright red",
+        color: "#ff0000",
+        rating: 0
+      },
+      {
+        id: "a11e3995-b0bg-4d58-8c48-5e49ae7f7f23",
+        title: "light gray",
+        color: "#ccc",
+        rating: 3
+      }
+    ]
+  };
+
+  delete = id => {
+    const newListAfterDelete = this.state.colors.filter(el => el.id !== id);
+    this.setState({
+      colors: newListAfterDelete
+    });
+  };
+
+  newItem = item => {
+    const newState = this.state.colors.concat(item);
+    this.setState({
+      colors: newState
+    });
+  };
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div className="container">
+        <AddColorForm submitNewList={this.newItem} />
+        <ListColorPalette colors={this.state.colors} delete={this.delete} />
       </div>
     );
   }
 }
-
-export default App;
